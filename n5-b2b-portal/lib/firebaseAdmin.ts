@@ -1,15 +1,15 @@
 import { initializeApp, getApps, cert } from 'firebase-admin/app';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
-import path from 'path';
-import fs from 'fs';
 
 if (!getApps().length) {
   try {
-    const serviceAccountPath = path.join(process.cwd(), 'serviceAccountKey.json');
-    const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
-
     initializeApp({
-      credential: cert(serviceAccount),
+      credential: cert({
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+        // 改行コード（\n）が文字列として扱われないように置換処理を入れます
+        privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      }),
     });
     console.log("Firebase Admin の初期化に成功しました");
   } catch (error) {
@@ -17,6 +17,5 @@ if (!getApps().length) {
   }
 }
 
-// route.ts でも使えるように FieldValue を一緒にエクスポートします
 export const db = getFirestore();
 export { FieldValue };
