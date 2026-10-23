@@ -54,8 +54,8 @@ export async function POST(request: Request) {
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/delivery/${orderRef.id}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/`,
+      success_url: `${baseUrl}/delivery/${orderRef.id}`,
+      cancel_url: `${baseUrl}/`,
     });
 
     // 2. Firebaseへの注文データ保存
