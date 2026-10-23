@@ -30,6 +30,7 @@ export async function POST(request: Request) {
 
     const orderRef = db.collection('orders').doc();
     
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     // 1. Stripe決済セッションの作成
     const session = await stripe.checkout.sessions.create({
       customer_email: email,
