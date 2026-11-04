@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { adminDb } from '@/lib/firebaseAdmin'; // 既存のFirebase Admin SDK設定に合わせてください
+import { db } from '@/lib/firebaseAdmin'; // 既存のFirebase Admin SDK設定に合わせてください
 
 // ランダムキー生成関数
 const generateRandomKey = () => {
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     const newKey = generateRandomKey();
 
     // 3. Firestoreへの保存 (poc_keys コレクション)
-    await adminDb.collection('poc_keys').add({
+    await db.collection('poc_keys').add({
       key: newKey,
       type: 'poc_trial',
       isUsed: false,
